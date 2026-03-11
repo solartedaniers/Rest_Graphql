@@ -3,13 +3,8 @@ class University {
   final String country;
   final List<String> webPages;
 
-  University({
-    required this.name,
-    required this.country,
-    required this.webPages,
-  });
+  University({required this.name, required this.country, required this.webPages});
 
-  // Factory para convertir el JSON de la REST API a nuestra clase
   factory University.fromJson(Map<String, dynamic> json) {
     return University(
       name: json['name'] ?? '',

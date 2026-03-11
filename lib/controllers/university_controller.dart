@@ -4,8 +4,6 @@ import '../services/rest_service.dart';
 
 class UniversityController extends GetxController {
   final RestService _service = RestService();
-  
-  // Observables para la UI
   var universities = <University>[].obs;
   var isLoading = true.obs;
 
@@ -18,10 +16,9 @@ class UniversityController extends GetxController {
   void fetchUniversities() async {
     try {
       isLoading(true);
-      var result = await _service.getUniversities('Colombia');
-      universities.assignAll(result);
+      universities.assignAll(await _service.getUniversities('Colombia'));
     } catch (e) {
-      Get.snackbar('Error', 'No se pudieron cargar las universidades');
+      Get.snackbar('Error', 'Fallo al cargar universidades');
     } finally {
       isLoading(false);
     }

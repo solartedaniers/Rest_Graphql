@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../controllers/country_controller.dart';
 
 class CountryInfoView extends StatelessWidget {
+  CountryInfoView({super.key});
+
   final CountryController controller = Get.put(CountryController());
 
   @override
@@ -15,7 +17,7 @@ class CountryInfoView extends StatelessWidget {
         }
         final country = controller.country.value;
         if (country == null) return const Center(child: Text('No hay datos'));
-        
+
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
