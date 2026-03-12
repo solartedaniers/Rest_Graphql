@@ -3,35 +3,40 @@ import 'package:get/get.dart';
 import '../controllers/country_controller.dart';
 
 class CountryInfoView extends StatelessWidget {
-  CountryInfoView({super.key});
-
-  final CountryController controller = Get.put(CountryController());
+  const CountryInfoView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CountryController controller = Get.put(CountryController());
     return Scaffold(
-      appBar: AppBar(title: const Text('Info País (GraphQL)')),
+      appBar: AppBar(title: const Text('Información del País')),
       body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final country = controller.country.value;
-        if (country == null) return const Center(child: Text('No hay datos'));
+        if (controller.isLoading.value) return const Center(child: CircularProgressIndicator());
+        final c = controller.country.value;
+        if (c == null) return const Center(child: Text('Datos no disponibles'));
 
         return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Nombre: ${country.name}', style: const TextStyle(fontSize: 18)),
-              Text('Capital: ${country.capital}'),
-              Text('Moneda: ${country.currency}'),
-              Text('Continente: ${country.continent}'),
-              Text('Idiomas: ${country.languages.join(", ")}'),
+              _buildInfoCard(Icons.flag, "País", c.name),
+              _buildInfoCard(Icons.location_city, "Capital", c.capital),
+              _buildInfoCard(Icons.attach_money, "Moneda", c.currency),
+              _buildInfoCard(Icons.language, "Idiomas", c.languages.join(", ")),
             ],
           ),
         );
       }),
+    );
+  }
+
+  Widget _buildInfoCard(IconData icon, String title, String value) {
+    return Card(
+      child: ListTile(
+        leading: Icon(icon, color: Colors.blueAccent),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text(value, style: const TextStyle(fontSize: 16)),
+      ),
     );
   }
 }
